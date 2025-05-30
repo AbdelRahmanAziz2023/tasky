@@ -5,12 +5,14 @@ class TaskModel {
   final String title;
   final String description;
   final bool isHighPriority;
+  bool isDone;
 
   TaskModel({
     required this.id,
     required this.title,
     required this.description,
     required this.isHighPriority,
+    this.isDone = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +21,7 @@ class TaskModel {
       'title': title,
       'description': description,
       'isHighPriority': isHighPriority,
+      "isDone": isDone,
     };
   }
 
@@ -28,6 +31,7 @@ class TaskModel {
       title: map['title'],
       description: map['description'],
       isHighPriority: map['isHighPriority'],
+      isDone: map['isDone'] ?? false,
     );
   }
 

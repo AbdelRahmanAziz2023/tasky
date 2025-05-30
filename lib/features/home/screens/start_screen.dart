@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tasky/core/components/custom_text_form_field.dart';
+import 'package:tasky/widgets/custom_text_form_field.dart';
 
 import 'home_screen.dart';
 
