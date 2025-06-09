@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/features/home/screens/home_screen.dart';
+import 'package:tasky/features/tasks/controller/task_controller.dart';
 
 import '../../../widgets/custom_check_box.dart';
 import '../../../widgets/custom_svg_picture.dart';
@@ -13,8 +14,8 @@ class HighPriorityTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller, Widget? child) {
+    return Consumer<TaskController>(
+      builder: (BuildContext context, TaskController controller, Widget? child) {
         final tasksList = controller.tasks;
 
         return Container(
@@ -83,7 +84,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                       },
                     ),
                   );
-                  controller.loadTask();
+                  controller.loadTasks();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),

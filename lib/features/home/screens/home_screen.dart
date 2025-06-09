@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/custom_svg_picture.dart';
+import '../../tasks/controller/task_controller.dart';
 import '../../tasks/screens/add_task_screen.dart';
 import '../controller/home_controller.dart';
 import '../widgets/achieved_tasks_widget.dart';
@@ -15,8 +16,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HomeController>(
-      create: (context) => HomeController()..init(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TaskController>(
+          create: (_) => TaskController(),
+        ),
+        ChangeNotifierProxyProvider<TaskController, HomeController>(
+          create: (context) => HomeController(context.read<TaskController>())..init(),
+          update: (context, taskController, homeController) =>
+          homeController!..taskController = taskController,
+        ),
+      ],
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -123,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                   );
 
                   if (result != null && result) {
-                    context.read<HomeController>().loadTask();
+                    context.read<TaskController>().loadTasks();
                   }
                 },
                 label: Text('Add New Task'),

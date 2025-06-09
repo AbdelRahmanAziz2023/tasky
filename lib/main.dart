@@ -4,6 +4,7 @@ import 'package:tasky/core/theme/dark_theme.dart';
 import 'package:tasky/core/theme/light_theme.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/features/home/screens/start_screen.dart';
+import 'package:tasky/features/splash/splash_screen.dart';
 
 import 'data/services/preference_manager.dart';
 import 'features/home/screens/main_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
-          home: username == null ? StartScreen() : MainScreen(),
+          home: SplashScreen(username: username,),
         );
       },
     );

@@ -1,33 +1,22 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../controller/home_controller.dart';
+import '../../tasks/controller/task_controller.dart';
 
 class AchievedTasksWidget extends StatelessWidget {
-  const AchievedTasksWidget({
-    super.key,
-    // required this.totalDoneTasks,
-    // required this.totalTask,
-    // required this.percent,
-  });
-
-  // final int totalDoneTasks;
-  // final int totalTask;
-  // final double percent;
+  const AchievedTasksWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context,HomeController controller, Widget? child) {
+    return Consumer<TaskController>(
+      builder: (BuildContext context, TaskController controller, Widget? child) {
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(20),
           ),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -38,7 +27,7 @@ class AchievedTasksWidget extends StatelessWidget {
                     'Achieved Tasks',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     '${controller.totalDoneTasks} Out of ${controller.totalTask} Done',
                     style: Theme.of(context).textTheme.titleSmall,
@@ -55,8 +44,8 @@ class AchievedTasksWidget extends StatelessWidget {
                       width: 48,
                       child: CircularProgressIndicator(
                         value: controller.percent,
-                        backgroundColor: Color(0xFF6D6D6D),
-                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF15B86C)),
+                        backgroundColor: const Color(0xFF6D6D6D),
+                        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF15B86C)),
                         strokeWidth: 4,
                       ),
                     ),

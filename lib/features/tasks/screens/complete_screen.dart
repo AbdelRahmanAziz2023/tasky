@@ -21,9 +21,9 @@ class CompleteScreen extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
+               Padding(
                 padding: EdgeInsets.all(18.0),
-                child: Text('Completed Tasks'),
+                child: Text('Completed Tasks',style: Theme.of(context).textTheme.displayMedium,),
               ),
               Expanded(
                 child: Padding(
@@ -37,7 +37,7 @@ class CompleteScreen extends StatelessWidget {
                             taskController.toggleTaskStatus(
                               index!,
                               value ?? false,
-                              StorageKey.tasks,
+
                             );
                           },
                           onDelete: (int? id) {

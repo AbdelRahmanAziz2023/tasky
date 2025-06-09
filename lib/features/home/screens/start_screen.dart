@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/features/home/screens/main_screen.dart';
 import 'package:tasky/widgets/custom_text_form_field.dart';
 
 import 'home_screen.dart';
@@ -36,7 +37,7 @@ class _StartScreenState extends State<StartScreen> {
                     SizedBox(width: 16),
                     Text(
                       'Tasky',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ],
                 ),
@@ -49,7 +50,8 @@ class _StartScreenState extends State<StartScreen> {
                 SizedBox(height: 8),
                 Text(
                   'Your productivity journey starts here.',
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 24),
                 SvgPicture.asset(
@@ -77,7 +79,7 @@ class _StartScreenState extends State<StartScreen> {
                       await pref.setString('username', controller.text);
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => MainScreen()),
                       );
                     }
                   },

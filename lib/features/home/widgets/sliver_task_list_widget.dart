@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/features/tasks/controller/task_controller.dart';
 
 import '../../../widgets/task_item_widget.dart';
 import '../controller/home_controller.dart';
@@ -9,8 +10,8 @@ class SliverTaskListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller, Widget? child) {
+    return Consumer<TaskController>(
+      builder: (BuildContext context, TaskController controller, Widget? child) {
         final tasksList = controller.tasks;
         return controller.isLoading
             ? SliverToBoxAdapter(
@@ -23,8 +24,8 @@ class SliverTaskListWidget extends StatelessWidget {
                 ? SliverToBoxAdapter(
                     child: Center(
                       child: Text(
-                        'No Data',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+                        "You don't have any tasks",
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                   )
@@ -41,7 +42,7 @@ class SliverTaskListWidget extends StatelessWidget {
                           onDelete: (int id) {
                             controller.deleteTask(id);
                           },
-                          onEdit: () => controller.loadTask(),
+                          onEdit: () => controller.loadTasks(),
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {

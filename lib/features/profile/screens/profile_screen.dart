@@ -29,9 +29,9 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
-                  child: Text('My Profile'),
+                  child: Text('My Profile',style: Theme.of(context).textTheme.displayMedium,),
                 ),
                 const SizedBox(height: 16),
                 Center(
@@ -68,13 +68,20 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 6),
-                      Text(controller.username),
-                      Text(controller.motivationQuote),
+                      Text(
+                        controller.username,
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      Text(
+                        controller.motivationQuote,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text('Profile Info'),
+                 Text('Profile Info',style: Theme.of(context).textTheme.displayMedium,),
                 const SizedBox(height: 24),
                 ListTile(
                   onTap: () async {

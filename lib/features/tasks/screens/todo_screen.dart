@@ -22,7 +22,7 @@ class TodoScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
                   'To Do Tasks',
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
               Expanded(
@@ -37,7 +37,6 @@ class TodoScreen extends StatelessWidget {
                             controller.toggleTaskStatus(
                               index!,
                               value ?? false,
-                              StorageKey.tasks,
                             );
                             controller.loadTasks();
                           },

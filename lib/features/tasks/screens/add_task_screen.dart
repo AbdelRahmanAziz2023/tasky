@@ -33,7 +33,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           child: Form(
             key: _key,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 8),
                 CustomTextFormField(
@@ -99,15 +99,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       taskNameController.clear();
                       taskDescriptionController.clear();
 
-                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     }
                   },
-                  label: Text(
-                    'Add New Task',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.displaySmall?.copyWith(fontSize: 14),
-                  ),
+                  label: Text('Add New Task'),
                   icon: Icon(Icons.add),
                 ),
               ],

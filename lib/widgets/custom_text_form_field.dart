@@ -15,14 +15,14 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         Text(
           name,
-          style: Theme.of(context).textTheme.displaySmall,
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20),
         ),
         SizedBox(height: 8),
         TextFormField(
           enabled: true,
           readOnly: false,
           controller: controller,
-          style: Theme.of(context).textTheme.displaySmall,
+          style: Theme.of(context).textTheme.bodyLarge,
           cursorColor: Colors.white,
           maxLines:maxLines ,
           validator: validator != null ? (value) => validator!(value) : null,

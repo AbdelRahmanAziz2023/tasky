@@ -1,16 +1,20 @@
+// task_controller.dart
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 
 import '../../../core/constants/storage_key.dart';
 import '../../../data/models/task_model.dart';
 import '../../../data/services/preference_manager.dart';
 
-class TaskController extends ChangeNotifier {
+class TaskController with ChangeNotifier {
   List<TaskModel> completeTasks = [];
   List<TaskModel> todoTasks = [];
+  List<TaskModel> tasks = [];
 
   bool isLoading = false;
+  int totalTask = 0;
+  int totalDoneTasks = 0;
+  double percent = 0;
 
   Future<void> init() async {
     await loadTasks();
@@ -26,56 +30,56 @@ class TaskController extends ChangeNotifier {
           .map((e) => TaskModel.fromMap(e))
           .toList();
 
+      tasks = taskList;
       todoTasks = taskList.where((task) => !task.isDone).toList();
       completeTasks = taskList.where((task) => task.isDone).toList();
+      calculatePercent();
     }
 
     isLoading = false;
     notifyListeners();
   }
 
+  void calculatePercent() {
+    totalTask = tasks.length;
+    totalDoneTasks = tasks.where((e) => e.isDone).length;
+    percent = totalTask == 0 ? 0 : totalDoneTasks / totalTask;
+  }
+
+  Future<void> doneTask(bool? value, int index) async {
+    tasks[index].isDone = value ?? false;
+    await _persistAndReload();
+  }
+
   Future<void> deleteTask(int id) async {
-    final taskString = PreferenceManager().getString(StorageKey.tasks);
-    if (taskString != null) {
-      final taskList = (jsonDecode(taskString) as List<dynamic>)
-          .map((e) => TaskModel.fromMap(e))
-          .toList();
+    tasks.removeWhere((task) => task.id == id);
+    await _persistAndReload();
+  }
 
-      taskList.removeWhere((task) => task.id == id);
-      await PreferenceManager().setString(
-        StorageKey.tasks,
-        jsonEncode(taskList),
-      );
-
-      await loadTasks(); // reload
+  Future<void> editTask(TaskModel updatedTask) async {
+    final index = tasks.indexWhere((t) => t.id == updatedTask.id);
+    if (index != -1) {
+      tasks[index] = updatedTask;
+      await _persistAndReload();
     }
   }
 
   Future<void> toggleTaskStatus(
-    int index,
-    bool isDone,
-    String storageKey,
-  ) async {
-    final taskString = PreferenceManager().getString(storageKey);
-    if (taskString != null) {
-      final taskList = (jsonDecode(taskString) as List<dynamic>)
-          .map((e) => TaskModel.fromMap(e))
-          .toList();
+      int index,
+      bool isDone,
+      ) async {
+    if (index < 0 || index >= tasks.length) return;
 
-      final task = completeTasks[index];
-      final idxInMainList = taskList.indexWhere((e) => e.id == task.id);
+    tasks[index].isDone = isDone;
+    await _persistAndReload();
+  }
 
-      if (idxInMainList != -1) {
-        taskList[idxInMainList] = TaskModel(
-          id: task.id,
-          title: task.title,
-          description: task.description,
-          isHighPriority: task.isHighPriority,
-        )..isDone = isDone;
-
-        await PreferenceManager().setString(storageKey, jsonEncode(taskList));
-        await loadTasks();
-      }
-    }
+  Future<void> _persistAndReload() async {
+    final updatedTask = tasks.map((task) => task.toMap()).toList();
+    await PreferenceManager().setString(
+      StorageKey.tasks,
+      jsonEncode(updatedTask),
+    );
+    await loadTasks(); // refresh todo & complete lists
   }
 }
